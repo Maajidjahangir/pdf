@@ -1,28 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto PDF Download</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Download Prompt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    /* Dark overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    /* Popup styles */
+    .popup {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+
+    .popup h2 {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    
+    .popup button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .btn-download {
+      background-color: green;
+      color: white;
+    }
+    
+    .btn-cancel {
+      background-color: gray;
+      color: white;
+    }
+  </style>
 </head>
-
 <body>
-
+  <div id="overlay" class="overlay">
+    <div class="popup">
+      <h2>Do you want to download the file?</h2>
+      <button class="btn-download" id="downloadBtn">Download</button>
+      <button class="btn-cancel" id="cancelBtn">Cancel</button>
+    </div>
+  </div>
   
   <script>
-    // PDF File ka URL
-    const pdfUrl = '_1686730898.pdf'; // yaha apni PDF file ka path dena hai
+    // Get elements
+    const overlay = document.getElementById('overlay');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
     
-    // PDF download karne ka function
-    const downloadPDF = () => {
+    // Close website on Cancel
+    cancelBtn.addEventListener('click', () => {
+      // Close the website
+      window.close();
+    });
+    
+    // Download file
+    downloadBtn.addEventListener('click', () => {
+      // Trigger download
       const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.download = '_1686730898.pdf'; // File ka naam
+      link.href = '_1686730898.pdf'; // Change to your file URL
+      link.download = '_1686730898.pdf';
       link.click();
-    };
-    
-    // Page load hone par PDF download ho
-    window.onload = downloadPDF;
+      
+      // Close popup
+      overlay.classList.remove('active');
+    });
   </script>
 </body>
 </html>
